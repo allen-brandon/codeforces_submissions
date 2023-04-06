@@ -1,17 +1,13 @@
 cases = int(input())
 
-def find(x):
-    return
-
 def solve(k):
-    l, r = 10**13
-    while r-l>1:
-        mid = l+(r-l)//2
-        if find(mid) <= k:
-            l = mid
-        else:
-            r = mid
-    return l
+    res = k
+    x = 10
+    while x<=res:
+        res += divmod(k, x)[0]
+        k = divmod(res, x)[1]
+        x//=10
+    return res
 
 
 for _ in range(cases):
