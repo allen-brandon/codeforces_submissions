@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+if [[ -z "$1" ]]; then
+  echo "Usage: newfile <filename>"
+  exit 1
+fi
+
+BASE_DIR="${PWD}/cpp"
+TEMPLATE="${PWD}/cpp/macros.cpp"
+TARGET="${BASE_DIR}/${1}"
+
+if [[ ! "$TARGET" =~ \.[^.]+$ ]]; then
+  TARGET="${TARGET}.cpp"
+fi
+
+mkdir -p "$(dirname "$TARGET")"
+if [[ -e "$TARGET" ]]; then
+  echo "Error: '$TARGET' already exists"
+  exit 1
+fi
+
+cat "$TEMPLATE" > "$TARGET"
+
+if command -v code &> /dev/null; then
+  LINE_COUNT=$(wc -l < "$TARGET" | tr -d '[:space:]')
+  code --goto "${TARGET}:${LINE_COUNT}:5"
+fi
