@@ -2,9 +2,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build ▶ Run ▶ Cleanup",
+            "label": "Run Solution",
             "type": "shell",
-            "command": "g++-14 -std=c++17 -O2 driver.cpp -o driver && ./driver ${fileBasenameNoExtension}",
+            "command": "./_driver ${fileBasenameNoExtension}",
             "options": {
                 "cwd": "${fileDirname}"
             },
@@ -21,11 +21,11 @@
             "problemMatcher": []
         },
         {
-            "label": "Direct Debug Builder",
+            "label": "Debug Solution",
             "type": "shell",
-            "command": "g++-14 -std=c++17 -g -DDEBUG ${file} -o ${fileDirname}/${fileBasenameNoExtension}",
+            "command": "g++-14 -std=c++23 -g -DLOCAL ${file} -o ${fileDirname}/${fileBasenameNoExtension}",
             // "options": {
-            //     "cwd": "${fileDirname}"
+            //     "cwd": "${fileDirname}" might just be able to uncomment this and remove the file prefix above <<
             // },
             "group": {
                 "kind": "build",
@@ -39,5 +39,62 @@
             },
             "problemMatcher": []
         },
+        {
+            "label": "Recompile Driver",
+            "type": "shell",
+            "command": "g++-14 -std=c++23 -O2 _driver.cpp -o _driver",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Recompile Driver and Run Solution",
+            "type": "shell",
+            "command": "g++-14 -std=c++23 -O2 _driver.cpp -o _driver && ./_driver ${fileBasenameNoExtension}",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Recompile Headers",
+            "type": "shell",
+            "command": "g++-14 -std=c++23 -O2 -x c++-header ./_pch.hpp -o ./_pch.hpp.gch && g++-14 -std=c++23 -O2 -x c++-header _driver_pch.hpp -o _driver_pch.hpp.gch",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        }
     ]
 }

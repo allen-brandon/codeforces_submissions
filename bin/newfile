@@ -6,7 +6,7 @@ if [[ -z "$1" ]]; then
 fi
 
 BASE_DIR="${PWD}/cpp"
-TEMPLATE="${PWD}/cpp/macros.cpp"
+TEMPLATE="${PWD}/cpp/_macros.cpp"
 TARGET="${BASE_DIR}/${1}"
 
 if [[ ! "$TARGET" =~ \.[^.]+$ ]]; then
@@ -22,6 +22,6 @@ fi
 cat "$TEMPLATE" > "$TARGET"
 
 if command -v code &> /dev/null; then
-  LINE_COUNT=$(wc -l < "$TARGET" | tr -d '[:space:]')
+  LINE_COUNT=$(( $(wc -l < "$TARGET" | tr -d '[:space:]') - 7 ))
   code --goto "${TARGET}:${LINE_COUNT}:5"
 fi
