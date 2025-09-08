@@ -29,9 +29,54 @@ array<pair<int,int>,4> didj = {{{-1,0},{0,1},{1,0},{0,-1}}};
 array<string,2> ny = {"No","Yes"};
 ll inf = 151515151515151;
 ll mod = 1000000007;
+vi adj[200001];
+int outd[200001];
+int dp[200001][2];
 
 void solve(int testcase) {
-    
+    ii(n); ii(m); ii(q);
+    fill(adj,adj+n, vi());
+    fill(outd,outd+n, 0);
+    fr(i,0,n) {
+        dp[i][0] = 1;
+        dp[i][1] = 1;
+    }
+    fr(i,0,m) {
+        ii(u); ii(v);
+        u--; v--;
+        adj[v].push_back(u);
+        outd[u]++;
+    }
+    auto red = [](int u, int j, auto self) -> void {
+        if (dp[u][j] == 0) return;
+        dp[u][j] = 0;
+        for (auto v : adj[u]) {
+            if (j==0) {
+                self(v, 1, self);
+            } else {
+                outd[v]--;
+                if (outd[v]==0) {
+                    self(v, 0, self);
+                }
+            }
+        }
+    };
+    vi res;
+    fr(query,0,q) {
+        ii(x); ii(u); u--;
+        if (x==2) {
+            // if (testcase==2) print("querying " << u+1 << ": " << dp[u][0]);
+            res.push_back(dp[u][0]);
+        } else {
+            // if (testcase==2) print("setting " << u+1 << " to red");
+            red(u, 0, red);
+            red(u, 1, red);
+        }
+    }
+    // if (testcase!=2) return;
+    for (auto x : res) {
+        print(ny[x]);
+    }
 }
 
 int main() {

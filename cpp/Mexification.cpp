@@ -29,9 +29,65 @@ array<pair<int,int>,4> didj = {{{-1,0},{0,1},{1,0},{0,-1}}};
 array<string,2> ny = {"No","Yes"};
 ll inf = 151515151515151;
 ll mod = 1000000007;
+int a[10][200001];
 
 void solve(int testcase) {
-    
+    ii(n); ii(k);
+    vi cur;
+    map<int,int> c;
+    cur.reserve(n);
+    fr(i,0,n) {
+        ii(x);
+        cur.push_back(x);
+    }
+    fr(op,1,k+1) {
+        c.clear();
+        fr(i,0,n) {
+            c[cur[i]]++;
+            a[op-1][i] = cur[i];
+        }
+        int mx = 0;
+        for (auto [x,f] : c) {
+            if (x==mx) mx++;
+        }
+        fr(i,0,n) {
+            cur[i] = c[cur[i]]==1 && cur[i]<mx? cur[i] : mx;
+        }
+        // print(mx);
+        // printv(cur);
+        //eq to one before
+        bool eq = true;
+        fr(i,0,n) {
+            if (a[op-1][i]!=cur[i]) {
+                eq = false;
+                break;
+            }
+        }
+        if (eq) {
+            ll res = accumulate(cur.begin(),cur.end(),0ll);
+            print(res);
+            return;
+        }
+        if (op>1) {
+            eq = true;
+            fr(i,0,n) {
+                if (a[op-2][i]!=cur[i]) {
+                    eq = false;
+                    break;
+                }
+            }
+            if (eq) {
+                ll res = 0;
+                fr(i,0,n) {
+                    res+=((k-op)&1)?  a[op-1][i] : cur[i];
+                }
+                print(res);
+                return;
+            }
+        }
+    }
+    ll res = accumulate(cur.begin(),cur.end(),0ll);
+    print(res);
 }
 
 int main() {

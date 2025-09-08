@@ -31,7 +31,27 @@ ll inf = 151515151515151;
 ll mod = 1000000007;
 
 void solve(int testcase) {
-    
+    ii(n); ii(k);
+    si(s);
+    int l = 0;
+    vi res(n);
+    int idx = n;
+    fr(r,0,n) {
+        if (s[r]=='0') {
+            res[r] = idx--;
+            l = r+1;
+        } else if (r+1-l==k) {
+            print(ny[0]);
+            return;
+        }
+    }
+    fr(i,0,n) {
+        if (s[i]=='1') {
+            res[i] = idx--;
+        }
+    }
+    print(ny[1]);
+    printv(res);
 }
 
 int main() {

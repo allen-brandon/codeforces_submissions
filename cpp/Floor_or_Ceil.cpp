@@ -12,11 +12,11 @@ using namespace std;
 using namespace __gnu_pbds;
 using ll = long long;
 using ull = unsigned long long;
-typedef tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> ordered_set; // find_by_order(), order_of_key()
-typedef tree<pair<ll,ll>, null_type, less<pair<ll,ll>>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 #define vll vector<ll>
 #define vi vector<int>
 #define counter(_) unordered_map<_,size_t>
+#define ordered_set tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> // find_by_order(), order_of_key()
+#define ordered_multiset tree<pair<ll,ll>, null_type, less<pair<ll,ll>>, rb_tree_tag, tree_order_statistics_node_update>
 #define fio ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define fr(i,l,r) for (int i=l; i<r; ++i)
 #define print(_) cout << _ << "\n";
@@ -31,7 +31,34 @@ ll inf = 151515151515151;
 ll mod = 1000000007;
 
 void solve(int testcase) {
-    
+    ii(x); ii(n); ii(m);
+    // if (testcase!=4) return;
+    int mi = x, ma = x;
+    int n1=n, m1=m;
+    while (mi>1) {
+        if (m1!=0) {
+            mi = (mi>>1)+(mi&1);
+            m1--;
+        } else if (n1!=0) {
+            mi>>=1;
+            n1--;
+        } else break;
+    }
+    if (n1) mi>>=1;
+    n1 = n;
+    m1 = m;
+    while (ma>1) {
+        if (n1!=0) {
+            ma>>=1;
+            n1--;
+        } else if (m1!=0) {
+            ma = (ma>>1)+(ma&1);
+            m1--;
+        } else break;
+    }
+    if (n1) ma>>=1;
+
+    print(mi << " " << ma);
 }
 
 int main() {

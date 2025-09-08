@@ -29,9 +29,45 @@ array<pair<int,int>,4> didj = {{{-1,0},{0,1},{1,0},{0,-1}}};
 array<string,2> ny = {"No","Yes"};
 ll inf = 151515151515151;
 ll mod = 1000000007;
+int a[200001];
+int b[200001];
 
 void solve(int testcase) {
-    
+    ii(n);
+    fr(i,0,n) {
+        ii(x);
+        a[i] = x;
+    }
+    fr(i,0,n) {
+        ii(x);
+        b[i] = x;
+    }
+    ll res = 0;
+    vector<pair<int,int>> st;
+    st.emplace_back(1<<30,-1);
+    fr(i,0,n) {
+        int x = a[i];
+        while (st.back().first<x) {
+            st.pop_back();
+        }
+        int lb=0, rb=st.size();
+        while (rb-lb>1) {
+            int mb = lb+(rb-lb)/2;
+            if (st[mb].first>=b[i]) {
+                lb = mb;
+            } else {
+                rb = mb;
+            }
+        }
+        auto [y,j] = st[lb];
+        ll r = n-i;
+        ll l = i-j;
+        res += (b[i]==a[i])*r*l;
+        l = j+1;
+        res += (b[i]<=y)*r*l;
+        st.emplace_back(x,i);
+    }
+    print(res);
 }
 
 int main() {

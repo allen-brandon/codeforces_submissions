@@ -1,0 +1,82 @@
+#ifdef LOCAL
+#include "_pch.hpp"
+#define USE_INPUT_FILE(file) freopen(file, "r", stdin);
+#else
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#define USE_INPUT_FILE(file)
+#endif
+
+using namespace std;
+using namespace __gnu_pbds;
+using ll = long long;
+using ull = unsigned long long;
+#define vll vector<ll>
+#define vi vector<int>
+#define counter(_) unordered_map<_,size_t>
+#define ordered_set tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> // find_by_order(), order_of_key()
+#define ordered_multiset tree<pair<ll,ll>, null_type, less<pair<ll,ll>>, rb_tree_tag, tree_order_statistics_node_update>
+#define fio ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define fr(i,l,r) for (int i=l; i<r; ++i)
+#define print(_) cout << _ << "\n";
+#define printv(_) for (const auto& x : _) cout << x << ' '; cout << '\n';
+#define printm(_) cout<<"{";for (const auto& kvp:_) cout<<kvp.first<<":"<<kvp.second<<","; cout<<"}\n";
+#define si(_) string _; cin >> _;
+#define ii(_) int _; cin >> _;
+#define lli(_) ll _; cin >> _;
+array<pair<int,int>,4> didj = {{{-1,0},{0,1},{1,0},{0,-1}}};
+array<string,2> ny = {"No","Yes"};
+ll inf = 151515151515151;
+ll mod = 998244353;
+bitset<8000000> bs;
+ll primes[400001];
+ll a[400001];
+
+void testcase() {
+    ii(n);
+    fr(i,0,n) {
+        lli(x);
+        a[i] = x;
+    }
+    int primes_idx = 0;
+    if (primes[n-1]==0) {
+        fr(i,2,8000000) {
+            bs[i] = 1;
+        }
+        fr(i,2,8000000) {
+            if (bs[i]==0) continue;
+            for (int j = i+i; j<8000000; j+=i) {
+                bs[j] = 0;
+            }
+            primes[primes_idx++] = i;
+            if (primes_idx==n) break;
+        }
+    }
+    // vll test(primes,primes+10);
+    // printv(test);
+    ll score = 0;
+    sort(a,a+n);
+    fr(i,0,n) {
+        score+=a[i];
+        score-=primes[i];
+    }
+    int r = n-1;
+    int l = 0;
+    int res = 0;
+    while (score<0) {
+        score-=a[l];
+        score+=primes[r];
+        r--;
+        l++;
+        res++;
+    }
+    print(res);
+}
+
+int main() {
+    USE_INPUT_FILE("_input.txt");
+    fio;
+    ii(t);
+    while (t--) testcase();
+}

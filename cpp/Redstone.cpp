@@ -29,9 +29,21 @@ array<pair<int,int>,4> didj = {{{-1,0},{0,1},{1,0},{0,-1}}};
 array<string,2> ny = {"No","Yes"};
 ll inf = 151515151515151;
 ll mod = 1000000007;
+int a[100];
 
 void solve(int testcase) {
-    
+    ii(n);
+    set<int> s;
+    int valid = 0;
+    fr(i,0,n) {
+        ii(x);
+        if (s.contains(x)) {
+            valid = 1;
+        } else {
+            s.insert(x);
+        }
+    }
+    print(ny[valid]);
 }
 
 int main() {

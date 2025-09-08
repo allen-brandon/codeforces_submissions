@@ -31,7 +31,11 @@ ll inf = 151515151515151;
 ll mod = 1000000007;
 
 void solve(int testcase) {
-    
+    ii(k); lli(x);
+    fr(i,0,k) {
+        x<<=1;
+    }
+    print(x);
 }
 
 int main() {

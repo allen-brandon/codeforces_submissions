@@ -29,9 +29,65 @@ array<pair<int,int>,4> didj = {{{-1,0},{0,1},{1,0},{0,-1}}};
 array<string,2> ny = {"No","Yes"};
 ll inf = 151515151515151;
 ll mod = 1000000007;
+vi a[501];
 
 void solve(int testcase) {
-    
+    ii(n);
+    vi v;
+    v.reserve(n);
+    fr(i,1,n+1) {
+        vi().swap(a[i]);
+        v.push_back(i);
+    }
+    pair<int,int> msf = {0,0};
+    fr(i,1,n+1) {
+        cout << "? " << i << " " << n << " ";
+        printv(v);
+        cout.flush();
+        ii(m);
+        a[m].push_back(i);
+        msf = max(msf,make_pair(m,i));
+    }
+    auto [m,u] = msf;
+    if (m==1) {
+        cout << "! " << m << " " << u << "\n";
+        cout.flush();
+        return;
+    }
+    vi res, cur;
+    int rem = n-a[m].size();
+    res.reserve(m);
+    res.push_back(u);
+    for (int j=m-1; j>0; j--) {
+        cur.swap(a[j]);
+        rem-=cur.size();
+        while (cur.size()>1) {
+            int k = cur.size()>>1;
+            vi l(cur.begin(),cur.begin()+k);
+            cout << "? " << u << " " << rem+res.size()+l.size() << " ";
+            fr(i,1,j) {
+                for (int x : a[i]) {
+                    cout << x << " ";
+                }
+            }
+            for (int x : l) {
+                cout << x << " ";
+            }
+            printv(res);
+            cout.flush();
+            ii(m1);
+            if (m1==m) {
+                cur.swap(l);
+            } else {
+                vi r(cur.begin()+k,cur.end());
+                cur.swap(r);
+            }
+        }
+        res.push_back(cur.back());
+    }
+    cout << "! " << res.size() << " ";
+    printv(res);
+    cout.flush();
 }
 
 int main() {

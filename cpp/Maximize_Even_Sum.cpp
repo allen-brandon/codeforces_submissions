@@ -31,7 +31,20 @@ ll inf = 151515151515151;
 ll mod = 1000000007;
 
 void solve(int testcase) {
-    
+    lli(a); lli(b);
+    if ((a&1)==1 && (b&1)==0) {
+        b>>=1;
+        a<<=1;   
+    }
+    if ((b&1)==1 && (a&1)==0) {
+        print(-1);
+        return;
+    }
+    if (a&1) {
+        print(a*b+1);
+    } else {
+        print(a*(b>>1)+2);
+    }
 }
 
 int main() {

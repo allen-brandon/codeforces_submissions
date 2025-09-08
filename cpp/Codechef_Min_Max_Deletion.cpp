@@ -29,9 +29,34 @@ array<pair<int,int>,4> didj = {{{-1,0},{0,1},{1,0},{0,-1}}};
 array<string,2> ny = {"No","Yes"};
 ll inf = 151515151515151;
 ll mod = 1000000007;
+ll a[200001];
+ll res[200001];
 
 void solve(int testcase) {
-    
+    ii(n); ii(q);
+    int m = 1;
+    while (m<n) m<<=1;
+    fr(i,0,n) {
+        lli(x);
+        a[i] = x;
+    }
+    ll cur = 0;
+    fr(i,0,n-1) cur+=min(a[i],a[i+1]);
+    fr(idx,0,q) {
+        ii(i) lli(x);
+        i--;
+        if (i<n-1) {
+            cur -= min(a[i],a[i+1]);
+            cur += min(x,a[i+1]);
+        }
+        if (i>0) {
+            cur -= min(a[i],a[i-1]);
+            cur += min(x,a[i-1]);
+        }
+        a[i] = x;
+        res[idx] = cur;
+    }
+    fr(i,0,q) print(res[i]);
 }
 
 int main() {

@@ -31,7 +31,38 @@ ll inf = 151515151515151;
 ll mod = 1000000007;
 
 void solve(int testcase) {
-    
+    ii(n);
+    ll msf1 = -inf;
+    ll msf2 = -inf;
+    fr(i,0,n) {
+        lli(x); lli(y);
+        msf1 = max(msf1,x+y);
+        msf2 = max(msf2,x-y);
+    }
+    ll d1,d2;
+    fr(i,0,3) {
+        cout << "? " << "R " << 1000000000 << "\n";
+        cout.flush();
+        lli(z);
+    }
+    fr(i,0,2) {
+        cout << "? " << "D " << 1000000000 << "\n";
+        cout.flush();
+        lli(z);
+        d2 = z;
+    }
+    fr(i,0,5) {
+        cout << "? " << "U " << 1000000000 << "\n";
+        cout.flush();
+        lli(z);
+        d1 = z;
+    }
+    ll x_plus_y = msf1 + d1 - 6000000000;
+    ll x_minus_y = msf2 + d2 - 5000000000;
+    ll x = (x_plus_y + x_minus_y)>>1;
+    ll y = x_plus_y - x;
+    cout << "! " << x << " " << y << "\n";
+    cout.flush();
 }
 
 int main() {

@@ -30,8 +30,15 @@ array<string,2> ny = {"No","Yes"};
 ll inf = 151515151515151;
 ll mod = 1000000007;
 
+bool check(int a, int b) {
+    if (a<b) swap(a,b);
+    return a<=(b<<1)+2;
+};
+
 void solve(int testcase) {
-    
+    ii(a); ii(b); ii(c); ii(d);
+    int res = check(a,b) && check(c-a,d-b);
+    print(ny[res]);
 }
 
 int main() {
