@@ -1,0 +1,91 @@
+#ifdef LOCAL
+#include "_pch.hpp"
+#define USE_INPUT_FILE(file) freopen(file, "r", stdin);
+#else
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#define USE_INPUT_FILE(file)
+#endif
+
+using namespace std;
+using namespace __gnu_pbds;
+using ll = long long;
+using ull = unsigned long long;
+typedef tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> ordered_set; // find_by_order(), order_of_key()
+typedef tree<pair<ll,ll>, null_type, less<pair<ll,ll>>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
+#define vll vector<ll>
+#define vi vector<int>
+#define counter(_) unordered_map<_,size_t>
+#define fio ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define fr(i,l,r) for (int i=l; i<r; ++i)
+#define print(_) cout << _ << "\n";
+#define printv(_) for (const auto& x : _) cout << x << ' '; cout << '\n';
+#define printm(_) cout<<"{";for (const auto& kvp:_) cout<<kvp.first<<":"<<kvp.second<<","; cout<<"}\n";
+#define si(_) string _; cin >> _;
+#define ii(_) int _; cin >> _;
+#define lli(_) ll _; cin >> _;
+array<pair<int,int>,4> didj = {{{-1,0},{0,1},{1,0},{0,-1}}};
+array<string,2> ny = {"No","Yes"};
+ll inf = 151515151515151;
+ll mod = 1000000007;
+int a[100001];
+int table[20][100001];
+ll dp[100001];
+
+struct SparseTable {
+    SparseTable(int n) {
+        for (int j = 1; 1<<j <= n; j++) {
+            fr(i,0,n+1-(1<<j)) {
+                int l = table[j-1][i];
+                int r = table[j-1][i+(1<<(j-1))];
+                table[j][i] = a[l] > a[r] ? l : r;
+            }
+            // vll test(table[j],table[j]+n);
+            // printv(test);
+        }
+    }
+
+    int query(int l, int r) {
+        int sz = r-l;
+        int j = 0;
+        while ((1<<j) <= sz) j++;
+        j--;
+        int i1 = table[j][l];
+        int i2 = table[j][r-(1<<j)];
+        return a[i1]>a[i2]? i1 : i2;
+    }
+};
+
+void solve(int testcase) {
+    ii(n);
+    fr(i,0,n-1) {
+        ii(x);
+        a[i] = x-1;
+        table[0][i] = i;
+    }
+    table[0][n-1] = n-1;
+    a[n-1] = n+1;
+    SparseTable st(n);
+    dp[n-1] = 0;
+    for (int i = n-2; i>=0; i--) {
+        int l = i+1, r = min(n-1, a[i]);
+        int j = st.query(l,r+1);
+        dp[i] = dp[j] + ll(n-1 - i) - ll(a[i] - j);
+    }
+    ll res = accumulate(dp,dp+n,0ll);
+    // vll test(dp,dp+n);
+    // printv(test);
+    // vi test(10000);
+    // iota(test.begin(),test.end(),2);
+    // printv(test);
+    print(res);
+}
+
+int main() {
+    USE_INPUT_FILE("_input.txt");
+    fio;
+    // ii(testcases);
+    int testcases = 1;
+    fr(testcase,1,testcases+1) solve(testcase);
+}

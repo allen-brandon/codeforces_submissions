@@ -1,11 +1,13 @@
 #ifdef LOCAL
 #include "_pch.hpp"
 #define USE_INPUT_FILE(file) freopen(file, "r", stdin);
+#define USE_OUTPUT_FILE(file) freopen(file, "w", stdout);
 #else
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 #define USE_INPUT_FILE(file)
+#define USE_OUTPUT_FILE(file)
 #endif
 
 using namespace std;
@@ -36,6 +38,8 @@ void solve(int testcase) {
 
 int main() {
     USE_INPUT_FILE("_input.txt");
+    // USE_OUTPUT_FILE("_output.txt");
+    // mt19937 rng(1);
     fio;
     ii(testcases);
     fr(testcase,1,testcases+1) solve(testcase);
