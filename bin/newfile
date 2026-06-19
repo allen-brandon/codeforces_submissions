@@ -22,6 +22,6 @@ fi
 cat "$TEMPLATE" > "$TARGET"
 
 if command -v code &> /dev/null; then
-  LINE_COUNT=$(( $(wc -l < "$TARGET" | tr -d '[:space:]') - 7 ))
+  LINE_COUNT=$(( $(wc -l < "$TARGET" | tr -d '[:space:]') - 9 ))
   code --goto "${TARGET}:${LINE_COUNT}:5"
 fi
